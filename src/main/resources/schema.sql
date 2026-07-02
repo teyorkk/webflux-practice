@@ -1,0 +1,33 @@
+
+
+
+CREATE TABLE IF NOT EXISTS users (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    username VARCHAR(50) NOT NULL UNIQUE,
+    email VARCHAR(100) NOT NULL UNIQUE,
+    password_hash VARCHAR(255) NOT NULL,
+    fiat_balance DECIMAL(18, 4) DEFAULT 100000.0000,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    );
+
+CREATE TABLE IF NOT EXISTS portfolio_assets (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    user_id BIGINT NOT NULL,
+    asset_symbol VARCHAR(10) NOT NULL,
+    quantity DECIMAL(18, 8) DEFAULT 0.00000000,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    UNIQUE KEY unique_user_asset (user_id, asset_symbol),
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+    );
+
+CREATE TABLE IF NOT EXISTS transactions (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    user_id BIGINT NOT NULL,
+    asset_symbol VARCHAR(10) NOT NULL,
+    transaction_type VARCHAR(10) NOT NULL,
+    quantity DECIMAL(18, 8) NOT NULL,
+    price_per_unit DECIMAL(18, 4) NOT NULL,
+    total_cost DECIMAL(18, 4) NOT NULL,
+    timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES users(id)
+    );

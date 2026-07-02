@@ -1,0 +1,33 @@
+server:
+  port: 8080
+spring:
+  application:
+    name: marketstream
+
+  config:
+    import: optional:file:.env[.properties]
+
+  r2dbc:
+    url: r2dbc:mysql://localhost:3306/marketstream
+    username: ${DB_USER:root}
+    password: ${DB_PASSWORD:password}
+    pool:
+      initial-size: 10
+      max-size: 50
+      max-idle-time: 30m
+
+  sql:
+    init:
+      mode: always
+      continue-on-error: false
+
+app:
+  jwt:
+    secret: ${JWT_SECRET:SECRET}
+    expiration: 86400000
+
+logging:
+  level:
+    root: INFO
+    org.springframework.web.reactive: DEBUG
+    org.springframework.data.r2dbc: DEBUG
