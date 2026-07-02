@@ -31,3 +31,6 @@ logging:
     root: INFO
     org.springframework.web.reactive: DEBUG
     org.springframework.data.r2dbc: DEBUG
+
+api:
+  uri: https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=usd&include_24hr_change=true

@@ -17,7 +17,7 @@ import java.util.concurrent.TimeUnit;
 public class WebClientConfig {
 
     @Bean
-    public WebClient webClient (WebClient.Builder webClientBuilder){
+    public WebClient webClient (){
         HttpClient httpClient = HttpClient.create()
                 .option(ChannelOption.CONNECT_TIMEOUT_MILLIS, 5000)
                 .responseTimeout(Duration.ofSeconds(5))
@@ -27,7 +27,7 @@ public class WebClientConfig {
 
 
 
-        return webClientBuilder
+        return WebClient.builder()
                 .clientConnector(new ReactorClientHttpConnector(httpClient))
                 .defaultHeader("Accept", "application/json")
                 .build();
